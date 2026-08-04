@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} | SOCVisionSystem</title>
+  <meta name="description" content="{{ page.description | default: 'Open-source camera sensor software for the Sony IMX708' }}">
+  <link rel="stylesheet" href="/imx708/assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📷</text></svg>">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/imx708/" class="header-logo">
+        <span class="logo-dot"></span>
+        SOCVisionSystem
+      </a>
+      <nav class="header-nav">
+        <a href="/imx708/">Home</a>
+        <a href="/imx708/projects/driver">Driver</a>
+        <a href="/imx708/projects/server">Server</a>
+        <a href="/imx708/projects/gui">GUI</a>
+        <a href="/imx708/guide/quickstart">Quick Start</a>
+        <a href="/imx708/guide/contributing" class="nav-cta">Contribute</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      <a href="https://github.com/SOCVisionSystem/imx708">GitHub</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/SOCVisionSystem/imx708/issues">Issues</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/SOCVisionSystem/imx708/pulls">Pull Requests</a>
+    </p>
+    <p style="margin-top: 0.5rem;">
+      &copy; {{ site.time | date: '%Y' }} SOCVisionSystem. GPL-2.0-only.
+    </p>
+  </footer>
+
+</body>
+</html>
