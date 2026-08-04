@@ -1,1 +1,8 @@
 *
+!Makefile
+!docs/
+!review.md
+!.github/
+!CODE_OF_CONDUCT.md
+!README.md
+!.gitignore
