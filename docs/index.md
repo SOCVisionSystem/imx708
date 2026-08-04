@@ -18,10 +18,10 @@ to desktop.
 Overall Project
 ---------------
 
-  Repository:  https://github.com/SOCVisionSystem/imx708
-  License:      GPL-2.0-only
-  Language:     C, C++17, Python
-  Platform:     Linux (Raspberry Pi, x86_64)
+Repository:  https://github.com/SOCVisionSystem/imx708
+License:      GPL-2.0-only
+Language:     C, C++17, Python
+Platform:     Linux (Raspberry Pi, x86_64)
 
 
 imx708-driver
@@ -35,16 +35,11 @@ power management with regulator and GPIO sequencing, and provides a
 char device interface for ioctl-based control. It is the foundation
 that the entire ecosystem builds on.
 
-  - V4L2 sub-device with s_stream, get_fmt/set_fmt, enum_mbus_code,
-    enum_frame_size, and g_frame_interval operations
-  - 30+ controls including analog/digital gain, exposure, HDR, test
-    patterns, white balance, scene modes, and color effects
-  - Platform abstraction layer via imx708_hw_ops for adding new SoC
-    variants without changing core driver code
-  - Thread-safe C library (libimx708) with static and shared builds,
-    pkg-config support, and symbol versioning
-  - Comprehensive test suite with unit tests, CLI tool, stress tester,
-    and frame capture application
+* V4L2 sub-device with s_stream, get_fmt/set_fmt, enum_mbus_code, enum_frame_size, and g_frame_interval operations
+* 30+ controls including analog/digital gain, exposure, HDR, test patterns, white balance, scene modes, and color effects
+* Platform abstraction layer via imx708_hw_ops for adding new SoC variants without changing core driver code
+* Thread-safe C library (libimx708) with static and shared builds, pkg-config support, and symbol versioning
+* Comprehensive test suite with unit tests, CLI tool, stress tester, and frame capture application
 
 
 imx708-server
@@ -58,16 +53,11 @@ and streaming telemetry. Built with RAII C++17, Catch2 tests, and
 Doxygen documentation. The server bridges the kernel driver to any
 gRPC-capable client.
 
-  - 25 gRPC RPCs including unary calls and server-side streaming for
-    real-time telemetry and continuous frame delivery
-  - RAII Camera class wrapping libimx708 with internal mutex for
-    thread-safe access from concurrent RPC handlers
-  - Daemon mode with double-fork, PID file management, and graceful
-    SIGINT/SIGTERM shutdown
-  - Input validation on all capture parameters to prevent memory
-    exhaustion from untrusted clients
-  - 100 MB max message size for full-resolution frame data with
-    gRPC reflection and health check enabled
+* 25 gRPC RPCs including unary calls and server-side streaming for real-time telemetry and continuous frame delivery
+* RAII Camera class wrapping libimx708 with internal mutex for thread-safe access from concurrent RPC handlers
+* Daemon mode with double-fork, PID file management, and graceful SIGINT/SIGTERM shutdown
+* Input validation on all capture parameters to prevent memory exhaustion from untrusted clients
+* 100 MB max message size for full-resolution frame data with gRPC reflection and health check enabled
 
 
 imx708-gui
@@ -81,21 +71,16 @@ The GUI connects to the gRPC server, displays live status cards,
 and provides controls for gain, exposure, HDR, test patterns, image
 processing, and frame capture.
 
-  - macOS-inspired design with custom MacSlider, sidebar navigation,
-    status cards, and SVG icons rendered at 2x for retina displays
-  - Thread-safe GrpcClient using Qt signals for cross-thread
-    communication with auto-reconnect on stream drop
-  - Seven screens: Dashboard, Controls, Capture, Image Processing,
-    Test Patterns, Registers, and Sensor Info
-  - Standalone executable via PyInstaller with system-wide install
-    support including .desktop file and app icon
-  - QSettings persistence for window geometry and IMX708_SERVER
-    environment variable for server address configuration
+* macOS-inspired design with custom MacSlider, sidebar navigation, status cards, and SVG icons rendered at 2x for retina displays
+* Thread-safe GrpcClient using Qt signals for cross-thread communication with auto-reconnect on stream drop
+* Seven screens: Dashboard, Controls, Capture, Image Processing, Test Patterns, Registers, and Sensor Info
+* Standalone executable via PyInstaller with system-wide install support including .desktop file and app icon
+* QSettings persistence for window geometry and IMX708_SERVER environment variable for server address configuration
 
 
 Contact
 -------
 
-  Sandesh
-  Email: sandesh@soccentric.com
-  GitHub: https://github.com/SOCVisionSystem/imx708
+Sandesh
+Email: sandesh@soccentric.com
+GitHub: https://github.com/SOCVisionSystem/imx708
