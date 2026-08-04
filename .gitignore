@@ -6,3 +6,9 @@
 !CODE_OF_CONDUCT.md
 !README.md
 !.gitignore
+!imx708-driver/CONTRIBUTING.md
+!imx708-driver/CHANGELOG.md
+!imx708-server/CONTRIBUTING.md
+!imx708-server/CHANGELOG.md
+!imx708-gui/CONTRIBUTING.md
+!imx708-gui/CHANGELOG.md
