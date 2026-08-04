@@ -6,64 +6,37 @@ title: IMX708 Camera Ecosystem
 SOCVisionSystem / IMX708 Camera Ecosystem
 ==========================================
 
-Open-source software for the Sony IMX708 camera sensor — the sensor
-powering the Raspberry Pi Camera Module 3.
-
-Three projects that work together:
-
-  ⚙️  imx708-driver   — Linux kernel module + C library
-  🌐  imx708-server   — C++ gRPC daemon
-  🖥️  imx708-gui      — PySide6 desktop application
+Open-source software stack for the Sony IMX708 camera sensor — the
+sensor behind the Raspberry Pi Camera Module 3. Three projects that
+work together to give you full control over the sensor from kernel
+to desktop.
 
 
-Quick Start
------------
+Overall Project
+---------------
 
-  git clone https://github.com/SOCVisionSystem/imx708.git
-  cd imx708
-  make
-  sudo make server-daemon
-  make gui-run
+  Repository:  https://github.com/SOCVisionSystem/imx708
+  License:      GPL-2.0-only
+  Language:     C, C++17, Python
+  Platform:     Linux (Raspberry Pi, x86_64)
 
 
 Projects
 --------
 
-  ⚙️  imx708-driver
-      V4L2 sub-device kernel driver with 30+ controls, sysfs ABI,
-      debugfs diagnostics, ftrace integration, and a thread-safe
-      C library for userspace applications.
+  • imx708-driver — Linux kernel module (V4L2 sub-device) with 30+
+    controls, sysfs ABI, debugfs, ftrace, and a C library.
 
-      → /imx708/projects/driver
+  • imx708-server — C++ gRPC daemon with 25 RPCs for remote sensor
+    control over the network.
 
-  🌐  imx708-server
-      C++ gRPC daemon exposing 25 RPCs — unary and streaming — for
-      full remote sensor control over the network.
-
-      → /imx708/projects/server
-
-  🖥️  imx708-gui
-      macOS-inspired PySide6 desktop app with real-time telemetry,
-      frame capture, and full sensor control via gRPC.
-
-      → /imx708/projects/gui
+  • imx708-gui — PySide6 desktop application with real-time telemetry,
+    frame capture, and full sensor control via gRPC.
 
 
-Contribute
-----------
-
-  We welcome contributions of all kinds.
-
-  Beginner:   Bug reports, documentation
-  Intermediate: GUI features (dark mode, frame preview)
-  Advanced:   Server RPCs (auth, WebRTC, Kubernetes)
-  Expert:     Driver development (new SoC back-ends, HDR)
-
-  → /imx708/guide/contributing
-
-
-License
+Contact
 -------
 
-  GNU General Public License v2.0-only
-  Copyright (C) 2026 SOCVisionSystem
+  Sandesh
+  Email: sandesh@soccentric.com
+  GitHub: https://github.com/SOCVisionSystem/imx708
