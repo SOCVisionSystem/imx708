@@ -1,0 +1,21 @@
+name: server-ci
+
+on:
+  push:
+    paths: ['imx708-server/**']
+  pull_request:
+    paths: ['imx708-server/**']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: sudo apt-get update && sudo apt-get install -y build-essential cmake ninja-build libgrpc++-dev libprotobuf-dev protobuf-compiler-grpc
+      - name: Build driver lib
+        run: make -C imx708-driver lib
+      - name: Build server
+        run: make -C imx708-server all
+      - name: Run tests
+        run: make -C imx708-server test
