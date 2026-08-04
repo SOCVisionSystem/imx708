@@ -1,0 +1,8 @@
+# SOCVisionSystem — IMX708 Ecosystem GitHub Pages
+
+title: SOCVisionSystem
+description: Open-source camera sensor software for the Sony IMX708
+theme: jekyll-theme-cayman
+show_downloads: true
+github:
+  repository_url: https://github.com/SOCVisionSystem/imx708
