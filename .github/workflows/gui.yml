@@ -1,0 +1,19 @@
+name: gui-ci
+
+on:
+  push:
+    paths: ['imx708-gui/**']
+  pull_request:
+    paths: ['imx708-gui/**']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: sudo apt-get update && sudo apt-get install -y python3-pip python3-pyqt6 && pip install grpcio grpcio-tools protobuf
+      - name: Generate stubs
+        run: make -C imx708-gui all
+      - name: Verify import
+        run: cd imx708-gui && python3 -c "import sys; sys.path.insert(0,'.'); from imx708_gui import __version__; print(f'GUI package v{__version__} OK')"
