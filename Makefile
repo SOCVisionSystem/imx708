@@ -39,8 +39,12 @@ CAL_DIR  := imx708-calibrate
 STR_DIR  := imx708-streamer
 SCN_DIR  := imx708-scan
 STO_DIR  := imx708-stereo
+ACC_DIR  := imx708-access
+TIM_DIR  := imx708-timelapse
+PTZ_DIR  := imx708-ptz
+ANL_DIR  := imx708-analytics
 
-APP_DIRS := $(DET_DIR) $(NVR_DIR) $(CAL_DIR) $(STR_DIR) $(SCN_DIR) $(STO_DIR)
+APP_DIRS := $(DET_DIR) $(NVR_DIR) $(CAL_DIR) $(STR_DIR) $(SCN_DIR) $(STO_DIR) $(ACC_DIR) $(TIM_DIR) $(PTZ_DIR) $(ANL_DIR)
 
 # ── Build configuration ────────────────────────────────────────────────────
 PLATFORM ?= native
@@ -192,9 +196,9 @@ gui-uninstall:
 # Application layer — Python projects (depend on imx708-server)
 # ═══════════════════════════════════════════════════════════════════════════
 
-.PHONY: apps detect nvr calibrate streamer scan stereo
+.PHONY: apps detect nvr calibrate streamer scan stereo access timelapse ptz analytics
 
-apps: detect nvr calibrate streamer scan stereo
+apps: detect nvr calibrate streamer scan stereo access timelapse ptz analytics
 	@echo "━━━ All application-layer projects ready ━━━"
 
 detect:
@@ -221,9 +225,25 @@ stereo:
 	@echo "━━━ imx708-stereo — Stereo Depth Vision ━━━"
 	$(MAKE) -C $(STO_DIR) all
 
+access:
+	@echo "━━━ imx708-access — Face Detection Access Panel ━━━"
+	$(MAKE) -C $(ACC_DIR) all
+
+timelapse:
+	@echo "━━━ imx708-timelapse — Time-Lapse / HDR Tool ━━━"
+	$(MAKE) -C $(TIM_DIR) all
+
+ptz:
+	@echo "━━━ imx708-ptz — Pan/Tilt/Zoom Tracking Rig ━━━"
+	$(MAKE) -C $(PTZ_DIR) all
+
+analytics:
+	@echo "━━━ imx708-analytics — Video Analytics Dashboard ━━━"
+	$(MAKE) -C $(ANL_DIR) all
+
 # ── Run targets ────────────────────────────────────────────────────────────
 
-.PHONY: detect-run nvr-run calibrate-run streamer-run scan-run stereo-run
+.PHONY: detect-run nvr-run calibrate-run streamer-run scan-run stereo-run access-run timelapse-run ptz-run analytics-run
 
 detect-run:
 	@echo "━━━ Running imx708-detect (server: $(SERVER)) ━━━"
@@ -249,6 +269,22 @@ stereo-run:
 	@echo "━━━ Running imx708-stereo ━━━"
 	cd $(STO_DIR) && $(PYTHON) src/stereo.py --server1 $(SERVER) --server2 $(subst 50051,50052,$(SERVER))
 
+access-run:
+	@echo "━━━ Running imx708-access (server: $(SERVER)) ━━━"
+	cd $(ACC_DIR) && $(PYTHON) src/access.py --server $(SERVER)
+
+timelapse-run:
+	@echo "━━━ Running imx708-timelapse (server: $(SERVER)) ━━━"
+	cd $(TIM_DIR) && $(PYTHON) src/timelapse.py --server $(SERVER)
+
+ptz-run:
+	@echo "━━━ Running imx708-ptz (server: $(SERVER)) ━━━"
+	cd $(PTZ_DIR) && $(PYTHON) src/ptz.py --server $(SERVER)
+
+analytics-run:
+	@echo "━━━ Running imx708-analytics (server: $(SERVER)) ━━━"
+	cd $(ANL_DIR) && $(PYTHON) src/analytics.py --server $(SERVER)
+
 # ═══════════════════════════════════════════════════════════════════════════
 # Commit — generate a commit message with sweet_commit and commit all changes
 # ═══════════════════════════════════════════════════════════════════════════
@@ -268,8 +304,9 @@ commit:
 
 .PHONY: _commit-all _commit-driver _commit-server _commit-gui
 .PHONY: _commit-detect _commit-nvr _commit-calibrate _commit-streamer _commit-scan _commit-stereo
+.PHONY: _commit-access _commit-timelapse _commit-ptz _commit-analytics
 
-_commit-all: _commit-driver _commit-server _commit-gui _commit-detect _commit-nvr _commit-calibrate _commit-streamer _commit-scan _commit-stereo
+_commit-all: _commit-driver _commit-server _commit-gui _commit-detect _commit-nvr _commit-calibrate _commit-streamer _commit-scan _commit-stereo _commit-access _commit-timelapse _commit-ptz _commit-analytics
 
 _commit-driver:
 	@if [ -d $(DRV_DIR)/.git ]; then \
@@ -343,6 +380,38 @@ _commit-stereo:
 		echo "$(STO_DIR): not a git repo, skipping"; \
 	fi
 
+_commit-access:
+	@if [ -d $(ACC_DIR)/.git ]; then \
+		echo "[imx708-access]" && \
+		cd $(ACC_DIR) && sweet_commit && git push ; \
+	else \
+		echo "$(ACC_DIR): not a git repo, skipping"; \
+	fi
+
+_commit-timelapse:
+	@if [ -d $(TIM_DIR)/.git ]; then \
+		echo "[imx708-timelapse]" && \
+		cd $(TIM_DIR) && sweet_commit && git push ; \
+	else \
+		echo "$(TIM_DIR): not a git repo, skipping"; \
+	fi
+
+_commit-ptz:
+	@if [ -d $(PTZ_DIR)/.git ]; then \
+		echo "[imx708-ptz]" && \
+		cd $(PTZ_DIR) && sweet_commit && git push ; \
+	else \
+		echo "$(PTZ_DIR): not a git repo, skipping"; \
+	fi
+
+_commit-analytics:
+	@if [ -d $(ANL_DIR)/.git ]; then \
+		echo "[imx708-analytics]" && \
+		cd $(ANL_DIR) && sweet_commit && git push ; \
+	else \
+		echo "$(ANL_DIR): not a git repo, skipping"; \
+	fi
+
 # ═══════════════════════════════════════════════════════════════════════════
 # Testing
 # ═══════════════════════════════════════════════════════════════════════════
@@ -354,9 +423,9 @@ test: driver-test server-test app-test
 	@echo "║  All tests complete                                    ║"
 	@echo "╚══════════════════════════════════════════════════════════╝"
 
-.PHONY: app-test test-detect test-nvr test-calibrate test-streamer test-scan test-stereo
+.PHONY: app-test test-detect test-nvr test-calibrate test-streamer test-scan test-stereo test-access test-timelapse test-ptz test-analytics
 
-app-test: test-detect test-nvr test-calibrate test-streamer test-scan test-stereo
+app-test: test-detect test-nvr test-calibrate test-streamer test-scan test-stereo test-access test-timelapse test-ptz test-analytics
 
 test-detect:
 	@echo "━━━ Testing imx708-detect ━━━"
@@ -381,6 +450,22 @@ test-scan:
 test-stereo:
 	@echo "━━━ Testing imx708-stereo ━━━"
 	cd $(STO_DIR) && $(MAKE) test
+
+test-access:
+	@echo "━━━ Testing imx708-access ━━━"
+	cd $(ACC_DIR) && $(MAKE) test
+
+test-timelapse:
+	@echo "━━━ Testing imx708-timelapse ━━━"
+	cd $(TIM_DIR) && $(MAKE) test
+
+test-ptz:
+	@echo "━━━ Testing imx708-ptz ━━━"
+	cd $(PTZ_DIR) && $(MAKE) test
+
+test-analytics:
+	@echo "━━━ Testing imx708-analytics ━━━"
+	cd $(ANL_DIR) && $(MAKE) test
 
 # ═══════════════════════════════════════════════════════════════════════════
 # Clean
@@ -427,6 +512,10 @@ help:
 	@echo "  imx708-streamer   — RTSP/WebRTC Streaming Daemon"
 	@echo "  imx708-scan       — Barcode, QR Code & Document Scanner"
 	@echo "  imx708-stereo     — Dual-IMX708 Stereo Depth Vision"
+	@echo "  imx708-access     — Face Detection Access/Presence Panel"
+	@echo "  imx708-timelapse  — Time-Lapse / HDR Photography Tool"
+	@echo "  imx708-ptz        — Pan/Tilt/Zoom Tracking Rig"
+	@echo "  imx708-analytics  — Video Analytics Dashboard"
 	@echo ""
 	@echo "Build targets:"
 	@echo "  all            Build everything (default)"
@@ -454,6 +543,10 @@ help:
 	@echo "  streamer       imx708-streamer"
 	@echo "  scan           imx708-scan"
 	@echo "  stereo         imx708-stereo"
+	@echo "  access         imx708-access"
+	@echo "  timelapse      imx708-timelapse"
+	@echo "  ptz            imx708-ptz"
+	@echo "  analytics      imx708-analytics"
 	@echo ""
 	@echo "  detect-run     Run imx708-detect"
 	@echo "  nvr-run        Run imx708-nvr"
@@ -461,10 +554,14 @@ help:
 	@echo "  streamer-run   Run imx708-streamer"
 	@echo "  scan-run       Run imx708-scan"
 	@echo "  stereo-run     Run imx708-stereo"
+	@echo "  access-run     Run imx708-access"
+	@echo "  timelapse-run  Run imx708-timelapse"
+	@echo "  ptz-run        Run imx708-ptz"
+	@echo "  analytics-run  Run imx708-analytics"
 	@echo ""
 	@echo "Other targets:"
 	@echo "  test           Run tests for all projects"
-	@echo "  commit [PROJECT=all|driver|server|gui|detect|nvr|calibrate|streamer|scan|stereo]"
+	@echo "  commit [PROJECT=all|driver|server|gui|detect|nvr|calibrate|streamer|scan|stereo|access|timelapse|ptz|analytics]"
 	@echo "  clean          Remove build artifacts"
 	@echo "  distclean      Deep clean (removes .venv for GUI)"
 	@echo "  help           Show this help"
@@ -483,6 +580,7 @@ help:
 	@echo "Dependency chain:"
 	@echo "  driver-lib ──► server ──► gui-proto"
 	@echo "       │              │"
-	@echo "       │              ├── detect, nvr, calibrate, scan, stereo"
+	@echo "       │              ├── detect, nvr, calibrate, scan, stereo, access, timelapse, ptz"
+	@echo "       │              ├── analytics (standalone gRPC service)"
 	@echo "       │              └── streamer (standalone V4L2)"
 	@echo "       └── driver-test"
