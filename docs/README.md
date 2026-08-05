@@ -31,3 +31,15 @@ bundle exec jekyll serve
 ```
 
 Or just open the Markdown files in your browser — they render fine on GitHub.
+
+
+
+
+Hi Andres,
+
+Following up on our conversation, here is the project description and current status as it stands.
+
+Let's sync up when I'm back from vacation to put together a priority-based plan and start executing on it.
+
+Best,
+Sandesh
